@@ -78,4 +78,4 @@ flatpak run es.gob.AutofirmaClient
 [flathub]: https://flathub.org
 [flatpak-bundles]: https://docs.flatpak.org/en/latest/single-file-bundles.html
 [matrix-chat]: https://matrix.to/#/#autofirma-flatpak:matrix.org
-[issues]: https://github.com/ivangj/autofirma-flatpak/issues
+[issues]: https://github.com/ivan-gj/autofirma-flatpak/issues
