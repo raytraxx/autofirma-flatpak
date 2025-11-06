@@ -1,28 +1,39 @@
 # AutoFirma Flatpak
 
-This repository can build AutoFirma for Flatpak, the electronic signature application from the Spanish Government.
+[Read in English](README.md)
+
+---
+
+Este repositorio permite construir AutoFirma para Flatpak, la aplicación de firma electrónica del Gobierno de España.
 
 > [!WARNING]
-> This is a community package and is **not officially supported by the Spanish Government**.
-
-[Leer en español](README.es.md)
+> Este es un paquete comunitario y **no está soportado oficialmente por el Gobierno de España**.
 
 
-## Objective
 
-The primary goal of this project is to package AutoFirma for Linux as a Flatpak, with the ultimate objective of **submitting it to [Flathub][flathub]** for easy distribution and installation.
+## Objetivo
 
-
-## Prerequisites
-
-To build this Flatpak, you need to have `flatpak` and `flatpak-builder` installed on your system.
-
-The command `bsdunzip` must also be available. It might be provided by `libarchive` in your distribution.
+El objetivo principal de este proyecto es empaquetar AutoFirma para Linux como Flatpak, con el objetivo final de **enviarlo a [Flathub][flathub]** para facilitar su distribución e instalación.
 
 
-### Install the Freedesktop Runtime and SDK
 
-This application uses the Freedesktop 25.08 runtime. Add the Flathub repository and install the required runtime and SDK with the following commands:
+## ¡Colabora!
+
+Este es un proyecto en curso. Dirígete a los [issues][issues] y ayuda o envía tus propios issues y propuestas.
+
+También tenemos un [chat en Matrix][matrix-chat] para conversaciones rápidas. ¡Ayúdanos a conectarlo con otras plataformas!
+
+
+## Prerrequisitos
+
+Para construir este Flatpak, necesitas tener `flatpak` y `flatpak-builder` instalados en tu sistema.
+
+El comando `bsdunzip` también debe estar disponible. Podría estar incluido en `libarchive` en tu distribución.
+
+
+### Instalar el Runtime y SDK de Freedesktop
+
+Esta aplicación utiliza el runtime Freedesktop 25.08. Añade el repositorio de Flathub e instala el runtime y SDK requeridos con los siguientes comandos:
 
 ```bash
 flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
@@ -30,49 +41,33 @@ flatpak install --user flathub org.freedesktop.Platform//25.08 org.freedesktop.S
 ```
 
 
-## Local Installation
+## Instalación Local
 
-Once the prerequisites are met, you can build and install the Flatpak locally.
+Una vez cumplidos los prerrequisitos, puedes construir e instalar el Flatpak localmente.
 
-**Clone this repository:**
+**Clona este repositorio:**
 ```bash
 git clone https://github.com/ivangj/autofirma-flatpak.git
 cd autofirma-flatpak
 ```
 
-**Build and install the application**. Use `flatpak-builder` to build the application and install it for the current user.
+**Construye e instala la aplicación**. Usa `flatpak-builder` para construir la aplicación e instalarla para el usuario actual.
 ```bash
 flatpak-builder --force-clean --user --install build-dir es.gob.AutofirmaClient.yaml
 ```
 
-**Run the application**. You can now run AutoFirma using
+**Ejecuta la aplicación**. Ahora puedes ejecutar AutoFirma usando
 ```bash
 flatpak run es.gob.AutofirmaClient
 ```
 
 
-## Future Improvements & To-Do List
+## Enlaces y Referencias
 
-This is an ongoing project. Help with the following tasks is greatly appreciated:
-
-- **Build from Source:** Currently, the package extracts a pre-compiled official `.deb` file. The goal is to compile AutoFirma from source instead. A good reference is the [work done by user 'aruiz' on GitHub][aruiz-repo].
-- **Improved Icon:** Replace the icon contained in the official `.deb` with a higher quality version.
-- **Manifest Cleanup:** Review the build manifest for any potential cleanup operations or optimizations.
-- **Metainfo Translations:** Translate the `metainfo.xml` file to make the app description available in English, Spanish, Catalan, Galician, Basque, and potentially Esperanto.
-- Install Huella Digital plugin
-
-
-## Fun Ideas to Explore
-
-- **Automated Releases:** Set up automated GitHub Actions to build and publish the [`flatpak` single-file bundle][flatpak-bundles].
-
-
-## Links and References
-
-- [**Official Autofirma website**][official-website]
-- [**Official AutoFirma Client Repository**][official-repo]
-- [**Unofficial Build Attempt**][aruiz-repo]
-- [**Flatpak Documentation**][flatpak-docs]
+- [**Sitio web oficial de Autofirma**][official-website]
+- [**Repositorio oficial del Cliente AutoFirma**][official-repo]
+- [**Intento de construcción no oficial**][aruiz-repo]
+- [**Documentación de Flatpak**][flatpak-docs]
 - [**Flathub**][flathub]
 
 [official-website]: https://firmaelectronica.gob.es
@@ -81,3 +76,5 @@ This is an ongoing project. Help with the following tasks is greatly appreciated
 [flatpak-docs]: https://docs.flatpak.org
 [flathub]: https://flathub.org
 [flatpak-bundles]: https://docs.flatpak.org/en/latest/single-file-bundles.html
+[matrix-chat]: https://matrix.to/#/#autofirma-flatpak:matrix.org
+[issues]: https://github.com/ivangj/autofirma-flatpak/issues
