@@ -19,7 +19,13 @@ El objetivo principal de este proyecto es empaquetar AutoFirma para Linux como F
 
 ## ¡Colabora!
 
-Este es un proyecto en curso. Dirígete a los [issues][issues] y ayuda o envía tus propios issues y propuestas.
+Queremos mejorar varios aspectos del flatpak antes de pedir publicar en Flathub. [¿Nos ayudas?][issues]
+
+> [!NOTE]
+> [Realizamos el desarrollo principalmente en Gitlab][self-repo]. 
+> Te recomendamos encarecidamente que escribas tus issues y hagas tus forks en Gitlab.
+> 
+> El mirror de Github está por visibilidad (e historia).
 
 También tenemos un [chat en Matrix][matrix-chat] para conversaciones rápidas. ¡Ayúdanos a conectarlo con otras plataformas!
 
@@ -77,4 +83,5 @@ flatpak run es.gob.AutofirmaClient
 [flathub]: https://flathub.org
 [flatpak-bundles]: https://docs.flatpak.org/en/latest/single-file-bundles.html
 [matrix-chat]: https://matrix.to/#/#autofirma-flatpak:matrix.org
-[issues]: https://github.com/ivan-gj/autofirma-flatpak/issues
+[issues]: https://gitlab.com/ivangj/autofirma-flatpak/-/issues
+[self-repo]: https://gitlab.com/ivangj/autofirma-flatpak

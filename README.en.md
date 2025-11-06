@@ -17,11 +17,17 @@ This repository can build AutoFirma for Flatpak, the electronic signature applic
 The primary goal of this project is to package AutoFirma for Linux as a Flatpak, with the ultimate objective of **submitting it to [Flathub][flathub]** for easy distribution and installation.
 
 
-## Collaborate! 
+## Contribute!
 
-This is an ongoing project. Head to the [issues][issues] and help out or submit your own issues and proposals!
+We want to improve several aspects of the Flatpak before requesting publication on Flathub. [Can you help us?][issues]
 
-We also have a [Matrix chat][matrix-chat] for quick conversations. Help us bridge it to other platforms! 
+> [!NOTE]
+> [We primarily develop on GitLab][self-repo].
+> We strongly recommend that you open issues and create forks on GitLab.
+>
+> The GitHub mirror is for visibility (and history).
+
+We also have a [Matrix chat][matrix-chat] for quick conversations. Help us connect it to other platforms!
 
 
 ## Local installation
@@ -78,4 +84,4 @@ flatpak run es.gob.AutofirmaClient
 [flathub]: https://flathub.org
 [flatpak-bundles]: https://docs.flatpak.org/en/latest/single-file-bundles.html
 [matrix-chat]: https://matrix.to/#/#autofirma-flatpak:matrix.org
-[issues]: https://github.com/ivan-gj/autofirma-flatpak/issues
+[issues]: https://gitlab.com/ivangj/autofirma-flatpak/-/issues
