@@ -1,6 +1,6 @@
 app-id: es.gob.AutofirmaClient
 runtime: org.freedesktop.Platform
-runtime-version: "24.08"
+runtime-version: "25.08"
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.openjdk17
@@ -21,6 +21,8 @@ finish-args:
   # Likely needed to access the system keystore
   - --talk-name=org.freedesktop.secrets
   - --env=PATH=/usr/bin:/app/bin:/app/jre/bin
+  # Needed to call 'certutil' on the host to trust the local CA
+  - --talk-name=org.flatpak.Spawn
 
 modules:
   - name: openjdk
@@ -39,10 +41,13 @@ modules:
       - install -d /app/lib
       - cp -r usr/lib/Autofirma/* /app/lib/
 
-      # Install the original launcher script and patch paths
+      # Install the original launcher script as autofirma.real and patch paths
       - install -d /app/bin
-      - install -c usr/bin/autofirma /app/bin/
-      - sed -i 's|/usr/lib/Autofirma|/app/lib|g' /app/bin/autofirma
+      - install -c usr/bin/autofirma /app/bin/autofirma.real
+      - sed -i 's|/usr/lib/Autofirma|/app/lib|g' /app/bin/autofirma.real
+
+      # Install our new wrapper as the main 'autofirma' command
+      - install -c -m 0755 autofirma.bash /app/bin/autofirma
 
       # Install icons following the freedesktop standard
       - install -d /app/share/icons/hicolor/64x64/apps
@@ -70,6 +75,8 @@ modules:
         url: https://firmaelectronica.gob.es/content/dam/firmaelectronica/descargas-software/autofirma19/Autofirma_Linux_Debian.zip
         sha256: "c29c251f2ee9f00dfc87f9582677dbd436a83565986ab0417ff065ceae716798"
         strip-components: 0
+      - type: file
+        path: autofirma.bash
 
   # Module for application store metadata (AppStream)
   - name: metainfo
