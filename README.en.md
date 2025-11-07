@@ -59,12 +59,12 @@ cd autofirma-flatpak
 
 **Build and install the application**. Use `flatpak-builder` to build the application and install it for the current user.
 ```bash
-flatpak-builder --force-clean --user --install build-dir es.gob.AutofirmaClient.yaml
+flatpak-builder --force-clean --user --install build-dir es.gob.autofirma.yaml
 ```
 
 **Run the application**. You can now run AutoFirma using
 ```bash
-flatpak run es.gob.AutofirmaClient
+flatpak run es.gob.autofirma
 ```
 
 
