@@ -7,22 +7,15 @@ sdk-extensions:
 command: autofirma
 
 finish-args:
-  # 'home:rw' is very broad, but AutoFirma needs to access
-  # files in arbitrary locations to sign them.
   - --filesystem=home:rw
-  - --filesystem=xdg-documents
   - --socket=wayland
   - --socket=x11
-  - --share=ipc
   - --share=network
-  - --socket=session-bus
-  # Needed for DNIe readers and other smartcards
-  - --device=all
-  # Likely needed to access the system keystore
-  - --talk-name=org.freedesktop.secrets
   - --env=PATH=/usr/bin:/app/bin:/app/jre/bin
   # Needed to call 'certutil' on the host to trust the local CA
   - --talk-name=org.flatpak.Spawn
+  # Likely needed to access the system keystore
+  - --talk-name=org.freedesktop.secrets
 
 modules:
   - name: openjdk
