@@ -11,12 +11,11 @@ finish-args:
   - --socket=wayland
   - --socket=x11
   - --share=network
-  - --socket=session-bus
   - --socket=pcsc  # smart card support
 
   - --env=PATH=/usr/bin:/app/bin:/app/jre/bin
   # Needed to call 'certutil' on the host to trust the local CA
-  - --talk-name=org.flatpak.Spawn
+  - --talk-name=org.freedesktop.Flatpak
   # Likely needed to access the system keystore
   - --talk-name=org.freedesktop.secrets
 
