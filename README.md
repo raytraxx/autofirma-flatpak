@@ -1,87 +1,60 @@
-# AutoFirma Flatpak
+# Autofirma Flatpak
 
-[Read in English](README.md)
+[Read in English](README.en.md)
 
 ---
 
-Este repositorio permite construir AutoFirma para Flatpak, la aplicación de firma electrónica del Gobierno de España.
+Flatpak no oficial de Autofirma, la aplicación de firma electrónica del Gobierno de España.
 
 > [!WARNING]
-> Este es un paquete comunitario y **no está soportado oficialmente por el Gobierno de España**.
+> **Paquete comunitario no oficial** - No está soportado por el Gobierno de España.
 
+## Estado actual
 
+✅ **Compatible con:**
+- Firma local de documentos
+- Firefox nativo y [Flathub][firefox-flathub] (Flatpak)
 
-## Objetivo
+❌ **No verificado:**
+- DNIe (probablemente no funcione)
 
-El objetivo principal de este proyecto es empaquetar AutoFirma para Linux como Flatpak, con el objetivo final de **enviarlo a [Flathub][flathub]** para facilitar su distribución e instalación.
+## Instalación
 
-
-
-## ¡Colabora!
-
-Queremos mejorar varios aspectos del flatpak antes de pedir publicar en Flathub. [¿Nos ayudas?][issues]
-
-> [!NOTE]
-> [Realizamos el desarrollo principalmente en Gitlab][self-repo]. 
-> Te recomendamos encarecidamente que escribas tus issues y hagas tus forks en Gitlab.
-> 
-> El mirror de Github está por visibilidad (e historia).
-
-También tenemos un [chat en Matrix][matrix-chat] para conversaciones rápidas. ¡Ayúdanos a conectarlo con otras plataformas!
-
-
-## Instalación en local
-
-Para construir este Flatpak, necesitas tener `flatpak` y `flatpak-builder` instalados en tu sistema.
-
-El comando `bsdunzip` también debe estar disponible. Podría estar incluido en `libarchive` en tu distribución.
-
-
-### Instalar el Runtime y SDK de Freedesktop
-
-Añade el repositorio de Flathub e instala el runtime y SDK requeridos con los siguientes comandos:
-
+**Prerrequisitos:**
 ```bash
-flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-flatpak install --user flathub org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.08 org.freedesktop.Sdk.Extension.openjdk17//25.08
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak install flathub org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.08 org.freedesktop.Sdk.Extension.openjdk17//25.08
 ```
 
-
-### Construcción del contenedor flatpak
-
-Una vez cumplidos los prerrequisitos, puedes construir e instalar el Flatpak localmente.
-
-**Clona este repositorio:**
+**Construir e instalar:**
 ```bash
-git clone https://github.com/ivan-gj/autofirma-flatpak.git
+git clone https://gitlab.com/ivangj/autofirma-flatpak.git
 cd autofirma-flatpak
-```
-
-**Construye e instala la aplicación**. Usa `flatpak-builder` para construir la aplicación e instalarla para el usuario actual.
-```bash
 flatpak-builder --force-clean --user --install build-dir es.gob.autofirma.yaml
 ```
 
-**Ejecuta la aplicación**. Ahora puedes ejecutar AutoFirma usando
-```bash
-flatpak run es.gob.autofirma
-```
 
+## Colaboración
 
-## Enlaces y Referencias
+¡Ayúdanos a mejorar! El objetivo es publicar en Flathub.
 
-- [**Sitio web oficial de Autofirma**][official-website]
-- [**Repositorio oficial del Cliente AutoFirma**][official-repo]
+- [**Reportar incidencias**][issues] (preferiblemente en GitLab)
+- [**Chat en Matrix**][matrix-chat]
+- [Repositorio principal en GitLab][self-repo] (GitHub es espejo)
+
+## Referencias
+
+- [Sitio oficial de AutoFirma][official-website]
+- [Repositorio oficial][official-repo]
+- [Documentación Flatpak][flatpak-docs]
 - [**Intento de construcción no oficial por aruiz**][aruiz-repo]
-- [**Documentación de Flatpak**][flatpak-docs]
-- [**Flathub**][flathub]
 
-[official-website]: https://firmaelectronica.gob.es
-[official-repo]: https://github.com/ctt-gob-es/clienteafirma
 [aruiz-repo]: https://github.com/aruiz/autofirma-flatpak
-[flatpak-docs]: https://docs.flatpak.org
-[flathub]: https://flathub.org
-[flatpak-bundles]: https://docs.flatpak.org/en/latest/single-file-bundles.html
-[matrix-chat]: https://matrix.to/#/#autofirma-flatpak:matrix.org
+[firefox-flathub]: https://flathub.org/apps/org.mozilla.firefox
+[flatpak-docs]: https://docs.flatpak.org/
 [issues]: https://gitlab.com/ivangj/autofirma-flatpak/-/issues
+[matrix-chat]: https://matrix.to/#/#autofirma-flatpak:matrix.org
+[official-repo]: https://github.com/ctt-gob-es/cliente-firma-desktop
+[official-website]: https://firmaelectronica.gob.es/
 [self-repo]: https://gitlab.com/ivangj/autofirma-flatpak
+```
