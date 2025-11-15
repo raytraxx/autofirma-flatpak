@@ -8,6 +8,7 @@ command: autofirma
 
 finish-args:
   - --filesystem=home:rw
+  - --filesystem=~/.var/app/org.mozilla.firefox/.mozilla/firefox:rw
   - --socket=wayland
   - --socket=x11
   - --share=network

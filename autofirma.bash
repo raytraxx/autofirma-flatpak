@@ -10,10 +10,10 @@ _autofirma_pfx="${_autofirma_dir}/autofirma.pfx"
 _cert_days="3650"
 _cert_cn="AutoFirma ROOT"
 _firefox_profiles_ini="${HOME}/.mozilla/firefox/profiles.ini"
+_firefox_flatpak_profiles_ini="${HOME}/.var/app/org.mozilla.firefox/.mozilla/firefox/profiles.ini"
 _nssdb="sql:${HOME}/.pki/nssdb"
 
 # This command will be used to run certutil on the *host* system
-# to modify the host's trust stores.
 HOST_CERTUTIL="flatpak-spawn --host certutil"
 
 function _make_ca_config {
@@ -64,6 +64,27 @@ echo "01" > "${_temp_dir}/crlnumber"
 }
 
 
+function process_firefox_profiles {
+  local profiles_ini="$1"
+  local base_dir="$2"
+
+  if [ ! -r "${profiles_ini}" ]; then
+    return
+  fi
+
+  local profile_paths=($(grep Path "${profiles_ini}"))
+  for profile_path in ${profile_paths[@]}; do
+    profile_path="${profile_path##*=}"
+    # Check if profile path is absolute or relative
+    [ ! -d "${profile_path}" ] && profile_path="${base_dir}/${profile_path}"
+    # Add CA in current firefox profile
+    if [ -d "${profile_path}" ]; then
+      ${HOST_CERTUTIL} -d "${profile_path}" -D -n "${_cert_cn}" > /dev/null 2>&1
+      ${HOST_CERTUTIL} -d "${profile_path}" -A -i "${_autofirma_ca}" -n "${_cert_cn}" -t C,,
+    fi
+  done
+}
+
 function trust_ca {
   # We must check if the .cer file actually exists before trying to trust it
   if [ ! -f "${_autofirma_ca}" ]; then
@@ -72,27 +93,18 @@ function trust_ca {
   fi
 
   echo "Updating system and Firefox trust stores..."
+
   # Add CA in shared user database
   ${HOST_CERTUTIL} -d "${_nssdb}" -D -n "${_cert_cn}" > /dev/null 2>&1
   ${HOST_CERTUTIL} -d "${_nssdb}" -A -i "${_autofirma_ca}" -n "${_cert_cn}" -t C,,
 
-  # Add CA in all firefox profiles (if any)
-  if [ -r "${_firefox_profiles_ini}" ]; then
-    _firefox_profile_paths=($(grep Path ${_firefox_profiles_ini}))
-    for _firefox_profile_path in ${_firefox_profile_paths[@]}; do
-      _firefox_profile_path="${_firefox_profile_path##*=}"
-      # Check if profile path is absolute or relative
-      [ ! -d "${_firefox_profile_path}" ] && \
-        _firefox_profile_path="${HOME}/.mozilla/firefox/${_firefox_profile_path}"
-      # Add CA in current firefox profile
-      if [ -d "${_firefox_profile_path}" ]; then
-        ${HOST_CERTUTIL} -d "${_firefox_profile_path}" -D -n "${_cert_cn}" > /dev/null 2>&1
-        ${HOST_CERTUTIL} -d "${_firefox_profile_path}" -A -i "${_autofirma_ca}" -n "${_cert_cn}" -t C,,
-      fi
-    done
-    unset _firefox_profile_paths _firefox_profile_path
-  fi
-  unset _autofirma_ca _autofirma_pfx _cert_cn _nssdb _firefox_profiles_ini
+  # Add CA in all native firefox profiles (if any)
+  process_firefox_profiles "${_firefox_profiles_ini}" "${HOME}/.mozilla/firefox"
+
+  # Add CA in all Firefox Flatpak profiles (if any)
+  process_firefox_profiles "${_firefox_flatpak_profiles_ini}" "${HOME}/.var/app/org.mozilla.firefox/.mozilla/firefox"
+
+  unset _autofirma_ca _autofirma_pfx _cert_cn _nssdb _firefox_profiles_ini _firefox_flatpak_profiles_ini
   echo "Trust update complete."
 }
 
