@@ -57,4 +57,3 @@ flatpak-builder --force-clean --user --install build-dir es.gob.autofirma.yaml
 [official-repo]: https://github.com/ctt-gob-es/cliente-firma-desktop
 [official-website]: https://firmaelectronica.gob.es/
 [self-repo]: https://gitlab.com/ivangj/autofirma-flatpak
-```
