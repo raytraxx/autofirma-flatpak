@@ -15,8 +15,6 @@ finish-args:
   - --socket=pcsc  # smart card support
 
   - --env=PATH=/usr/bin:/app/bin:/app/jre/bin
-  # Needed to call 'certutil' on the host to trust the local CA
-  - --talk-name=org.freedesktop.Flatpak
   # Likely needed to access the system keystore
   - --talk-name=org.freedesktop.secrets
 
@@ -69,6 +67,63 @@ modules:
         strip-components: 0
       - type: file
         path: autofirma.bash
+
+
+  # 2. nspr (Netscape Portable Runtime, required by NSS)
+  - name: nspr
+    buildsystem: autotools
+    subdir: nspr
+    # no-autogen: true
+    config-opts:
+      # Standard Flatpak install prefix
+      - --prefix=/app
+      # Force a 64-bit build, required by NSPR on modern platforms
+      - --enable-64bit
+      # Disable debug builds, as required by Flathub policies
+      - --disable-debug
+      # Required for NSPR build system
+      - --with-mozilla
+      # Use standard POSIX threads
+      - --with-pthreads
+      # Ensure shared libraries (.so) are built
+      - --enable-shared
+      # Do not build static libraries (.a)
+      - --disable-static
+    sources:
+      - type: archive
+        url: https://archive.mozilla.org/pub/nspr/releases/v4.35/src/nspr-4.35.tar.gz
+        sha256: 7ea3297ea5969b5d25a5dd8d47f2443cda88e9ee746301f6e1e1426f8a6abc8f
+
+  - name: nss
+    buildsystem: simple
+    build-commands:
+      - |
+        cd nss
+        make -j$FLATPAK_BUILDER_N_JOBS USE_64=1 \
+        NSPR_INCLUDE_DIR=/app/include/nspr \
+        NSPR_LIB_DIR=/app/lib \
+
+      - |
+        mkdir -p /app/bin /app/lib/pkgconfig /app/include/nss
+        export NSS_DIST_DIR=$(find dist -maxdepth 1 -type d -name 'Linux*')
+        cp -L $NSS_DIST_DIR/bin/certutil /app/bin/
+        cp -L $NSS_DIST_DIR/bin/modutil /app/bin/
+        cp -L $NSS_DIST_DIR/bin/signtool /app/bin/
+        cp -L $NSS_DIST_DIR/lib/*.so /app/lib/
+        cp -Lr dist/public/nss/* /app/include/nss/
+
+    cleanup:
+      - '/include'
+      - '/lib/pkgconfig'
+      # remove the extra tools
+      - '/bin/modutil'
+      - '/bin/signtool'
+
+    sources:
+      - type: archive
+        url: https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_98_RTM/src/nss-3.98.tar.gz
+        sha256: f549cc33d35c0601674bfacf7c6ad683c187595eb4125b423238d3e9aa4209ce
+
 
   # Module for application store metadata (AppStream)
   - name: metainfo

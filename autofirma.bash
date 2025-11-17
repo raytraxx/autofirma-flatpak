@@ -13,8 +13,6 @@ _firefox_profiles_ini="${HOME}/.mozilla/firefox/profiles.ini"
 _firefox_flatpak_profiles_ini="${HOME}/.var/app/org.mozilla.firefox/.mozilla/firefox/profiles.ini"
 _nssdb="sql:${HOME}/.pki/nssdb"
 
-# This command will be used to run certutil on the *host* system
-HOST_CERTUTIL="flatpak-spawn --host certutil"
 
 function _make_ca_config {
   cat << EOF > "${_temp_dir}/openssl.cnf"
@@ -79,8 +77,8 @@ function process_firefox_profiles {
     [ ! -d "${profile_path}" ] && profile_path="${base_dir}/${profile_path}"
     # Add CA in current firefox profile
     if [ -d "${profile_path}" ]; then
-      ${HOST_CERTUTIL} -d "${profile_path}" -D -n "${_cert_cn}" > /dev/null 2>&1
-      ${HOST_CERTUTIL} -d "${profile_path}" -A -i "${_autofirma_ca}" -n "${_cert_cn}" -t C,,
+      certutil -d "${profile_path}" -D -n "${_cert_cn}" > /dev/null 2>&1
+      certutil -d "${profile_path}" -A -i "${_autofirma_ca}" -n "${_cert_cn}" -t C,,
     fi
   done
 }
@@ -95,8 +93,8 @@ function trust_ca {
   echo "Updating system and Firefox trust stores..."
 
   # Add CA in shared user database
-  ${HOST_CERTUTIL} -d "${_nssdb}" -D -n "${_cert_cn}" > /dev/null 2>&1
-  ${HOST_CERTUTIL} -d "${_nssdb}" -A -i "${_autofirma_ca}" -n "${_cert_cn}" -t C,,
+  certutil -d "${_nssdb}" -D -n "${_cert_cn}" > /dev/null 2>&1
+  certutil -d "${_nssdb}" -A -i "${_autofirma_ca}" -n "${_cert_cn}" -t C,,
 
   # Add CA in all native firefox profiles (if any)
   process_firefox_profiles "${_firefox_profiles_ini}" "${HOME}/.mozilla/firefox"
