@@ -91,8 +91,8 @@ modules:
       - --disable-static
     sources:
       - type: archive
-        url: https://archive.mozilla.org/pub/nspr/releases/v4.35/src/nspr-4.35.tar.gz
-        sha256: 7ea3297ea5969b5d25a5dd8d47f2443cda88e9ee746301f6e1e1426f8a6abc8f
+        url: https://ftp.mozilla.org/pub/nspr/releases/v4.37/src/nspr-4.37.tar.gz
+        sha256: 5f9344ed0e31855bd38f88b33c9d9ab94f70ce547ef3213e488d1520f61840fa
 
   - name: nss
     buildsystem: simple
@@ -121,8 +121,8 @@ modules:
 
     sources:
       - type: archive
-        url: https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_98_RTM/src/nss-3.98.tar.gz
-        sha256: f549cc33d35c0601674bfacf7c6ad683c187595eb4125b423238d3e9aa4209ce
+        url: https://ftp.mozilla.org/pub/security/nss/releases/NSS_3_112_2_RTM/src/nss-3.112.2.tar.gz
+        sha256: 2019b8bd0bedeeae395fc360811af0eb51a19d047843059ec07ea435b90271d5
 
 
   # Module for application store metadata (AppStream)
