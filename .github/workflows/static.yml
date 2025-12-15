@@ -34,12 +34,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Set up flatpak-builder
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           manifest-path: es.gob.autofirma.yaml
+          gpg-sign: 743BA0F02BB6D941
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
