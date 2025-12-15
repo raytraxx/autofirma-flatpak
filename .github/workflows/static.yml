@@ -45,10 +45,14 @@ jobs:
         with:
           manifest-path: es.gob.autofirma.yaml
           gpg-sign: 743BA0F02BB6D941
+      - name: Copy static files to repo
+        run: |
+          cp autofirma.flatpakrepo ./repo/autofirma.flatpakrepo
+          cp autofirma.flatpakref ./repo/autofirma.flatpakref
+          cp autofirma.svg ./repo/autofirma.svg
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
           path: './repo'
       - name: Deploy to GitHub Pages
         id: deployment
