@@ -15,9 +15,17 @@ Unofficial Flatpak of Autofirma, the Spanish Government's electronic signature a
 - Local document signing
 - Native Firefox and [Flathub's Firefox][firefox-flathub] (Flatpak)
 - DNIe
-- Other PKCS#11 cryptographic modules supported by OpenSC (e. g.: YubiKey) - Follow the same procedure as for integrating with DNIe.
+- Other PKCS#11 cryptographic modules supported by OpenSC (e.g.: YubiKey) - Follow the same procedure as for integrating with DNIe.
 
 ## Installation
+
+### Installation from GH pages repository
+
+```bash
+flatpak install https://raytraxx.github.io/autofirma-flatpak/autofirma.flatpakref
+```
+
+### Build from source
 
 **Prerequisites:**
 ```bash
@@ -27,7 +35,7 @@ flatpak install flathub org.freedesktop.Platform//25.08 org.freedesktop.Sdk//25.
 
 **Build and install:**
 ```bash
-git clone https://gitlab.com/ivangj/autofirma-flatpak.git
+git clone https://raytraxx.github.io/autofirma-flatpak/
 cd autofirma-flatpak
 flatpak-builder --force-clean --user --install build-dir es.gob.autofirma.yaml
 flatpak run es.gob.autofirma
