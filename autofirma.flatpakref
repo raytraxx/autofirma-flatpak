@@ -1,7 +1,7 @@
-[Flatpak Repo]
+[Flatpak Ref]
 Title=Cliente AutoFirma
 Name=es.gob.autofirma
-Url=https://raytraxx.github.io/autofirma-flatpak/repo/
+Url=https://raytraxx.github.io/autofirma-flatpak/
 SuggestRemoteName=autofirma
 Homepage=https://github.com/raytraxx/autofirma-flatpak
 Comment=Repositorio con el Flatpak del cliente AutoFirma
