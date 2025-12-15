@@ -102,6 +102,7 @@ modules:
         make -j$FLATPAK_BUILDER_N_JOBS USE_64=1 \
         NSPR_INCLUDE_DIR=/app/include/nspr \
         NSPR_LIB_DIR=/app/lib \
+        NSS_DISABLE_GTESTS=1 \
 
       - |
         mkdir -p /app/bin /app/lib/pkgconfig /app/include/nss
