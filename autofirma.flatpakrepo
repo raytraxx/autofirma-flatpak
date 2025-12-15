@@ -1,6 +1,6 @@
 [Flatpak Repo]
 Title=Cliente AutoFirma
-Url=https://raytraxx.github.io/autofirma-flatpak/repo/
+Url=https://raytraxx.github.io/autofirma-flatpak/
 Homepage=https://github.com/raytraxx/autofirma-flatpak
 Comment=Repositorio con el Flatpak del cliente AutoFirma
 Description=Repositorio con el Flatpak del cliente AutoFirma
